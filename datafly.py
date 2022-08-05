@@ -254,7 +254,7 @@ class _Table:
                 for i, row in enumerate(self.table):
 
                     self._debug("[DEBUG] Reading row %d from original table..." % i, _DEBUG)
-                    table_row = self._get_values(row, list(self.attributes), i)
+                    table_row = self._get_values(row.strip().replace(' ', ''), list(self.attributes), i)
 
                     # Skip this row if it must be ignored:
                     if table_row is None:
@@ -337,7 +337,9 @@ class _Table:
         # Ignore empty lines:
         if row.strip() == '':
             return None
-
+        
+           
+        
     def _set_values(self, row, values, attributes: list) -> str:
 
         """
@@ -391,6 +393,7 @@ class CsvTable(_Table):
 
         # Initialize the dictionary of table attributes:
         for i, attribute in enumerate(next(csv_reader)):
+            
             self.attributes[attribute] = i
 
     def _get_values(self, row: str, attributes: list, row_index=None):
@@ -404,6 +407,7 @@ class CsvTable(_Table):
         # Try to parse the row:
         try:
             csv_reader = csv.reader(StringIO(row))
+            
         except IOError:
             raise
         parsed_row = next(csv_reader)
@@ -421,7 +425,7 @@ class CsvTable(_Table):
 
         for i, attribute in enumerate(attributes):
             row[self.attributes[attribute]] = values[i]
-
+        
         values = StringIO()
         csv_writer = csv.writer(values)
         csv_writer.writerow(row)
