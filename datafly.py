@@ -254,7 +254,7 @@ class _Table:
                 for i, row in enumerate(self.table):
 
                     self._debug("[DEBUG] Reading row %d from original table..." % i, _DEBUG)
-                    table_row = self._get_values(row.strip().replace(' ', ''), list(self.attributes), i)
+                    table_row = self._get_values(row.strip().replace(' ', ''), list(self.attributes), i) #Se obtiene los registros de cada fila 
 
                     # Skip this row if it must be ignored:
                     if table_row is None:
